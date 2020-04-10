@@ -1,4 +1,4 @@
-// Copyright 2019-2020 go-gtp authors. All rights reserved.
+// Copyright 2019-2020 upf authors. All rights reserved.
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
@@ -20,8 +20,8 @@ import (
 	"github.com/vishvananda/netlink"
 	"google.golang.org/grpc"
 
-	"go-gtp/examples/gw-tester/s1mme"
-	v1 "upf/v1"
+	"upf/gtp/examples/gw-tester/s1mme"
+	v1 "upf/gtp/v1"
 )
 
 type enb struct {

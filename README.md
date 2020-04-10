@@ -1,11 +1,11 @@
-# go-gtp: GTP in Golang
+# upf: GTP in Golang
 
 Package gtp provides simple and painless handling of GTP(GPRS Tunneling Protocol), implemented in the Go Programming Language.
 
-[![CircleCI](https://circleci.com/gh/wmnsk/go-gtp.svg?style=shield)](https://circleci.com/gh/wmnsk/go-gtp)
-[![GolangCI](https://golangci.com/badges/go-gtp.svg)](https://golangci.com/r/go-gtp)
-[![GoDoc](https://godoc.org/go-gtp?status.svg)](https://godoc.org/go-gtp)
-[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://go-gtp/blob/master/LICENSE)
+[![CircleCI](https://circleci.com/gh/wmnsk/upf.svg?style=shield)](https://circleci.com/gh/wmnsk/upf)
+[![GolangCI](https://golangci.com/badges/upf.svg)](https://golangci.com/r/upf)
+[![GoDoc](https://godoc.org/upf?status.svg)](https://godoc.org/upf)
+[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://upf/blob/master/LICENSE)
 
 ## Features
 
@@ -110,4 +110,4 @@ _I'm always open to welcome co-authors! Please feel free to talk to me._
 
 ## LICENSE
 
-[MIT](https://go-gtp/blob/master/LICENSE)
+[MIT](https://upf/blob/master/LICENSE)

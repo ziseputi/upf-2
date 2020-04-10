@@ -1,4 +1,4 @@
-// Copyright 2019-2020 go-gtp authors. All rights reserved.
+// Copyright 2019-2020 upf authors. All rights reserved.
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
@@ -12,9 +12,9 @@ import (
 
 	"github.com/pkg/errors"
 
-	v1 "upf/v1"
-	v2 "upf/v2"
-	"upf/v2/ies"
+	v1 "upf/gtp/v1"
+	v2 "upf/gtp/v2"
+	"upf/gtp/v2/ies"
 )
 
 // getPGWIP is to get P-GW's IP address according to APN.

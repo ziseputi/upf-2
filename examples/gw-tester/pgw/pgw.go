@@ -1,4 +1,4 @@
-// Copyright 2019-2020 go-gtp authors. All rights reserved.
+// Copyright 2019-2020 upf authors. All rights reserved.
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
@@ -12,11 +12,11 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/vishvananda/netlink"
-	v1 "upf/v1"
-	"upf/v2/messages"
+	v1 "upf/gtp/v1"
+	"upf/gtp/v2/messages"
 
 	"github.com/pkg/errors"
-	v2 "upf/v2"
+	v2 "upf/gtp/v2"
 )
 
 type pgw struct {

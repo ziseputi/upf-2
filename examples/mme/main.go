@@ -1,8 +1,8 @@
-// Copyright 2019-2020 go-gtp authors. All rights reserved.
+// Copyright 2019-2020 upf authors. All rights reserved.
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
-// Command mme is a reference implementation of MME with go-gtp.
+// Command mme is a reference implementation of MME with upf.
 //
 // MME follows the steps below if there's no unexpected events in the middle.
 // Note that the  S1 and DNS procedures is just mocked to make it work in
@@ -35,10 +35,10 @@ import (
 	"sync"
 	"time"
 
-	v1 "upf/v1"
-	v2 "upf/v2"
-	"upf/v2/ies"
-	"upf/v2/messages"
+	v1 "upf/gtp/v1"
+	v2 "upf/gtp/v2"
+	"upf/gtp/v2/ies"
+	"upf/gtp/v2/messages"
 )
 
 // command-line flags.

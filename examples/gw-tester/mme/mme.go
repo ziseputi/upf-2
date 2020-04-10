@@ -1,4 +1,4 @@
-// Copyright 2019-2020 go-gtp authors. All rights reserved.
+// Copyright 2019-2020 upf authors. All rights reserved.
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
@@ -15,10 +15,10 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
 
-	"go-gtp/examples/gw-tester/s1mme"
-	v2 "upf/v2"
-	"upf/v2/ies"
-	"upf/v2/messages"
+	"upf/gtp/examples/gw-tester/s1mme"
+	v2 "upf/gtp/v2"
+	"upf/gtp/v2/ies"
+	"upf/gtp/v2/messages"
 )
 
 // Session represents a subscriber.

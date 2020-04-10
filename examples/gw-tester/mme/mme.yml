@@ -1,6 +1,6 @@
 mcc: "001"
 mnc: "01"
-apn: "gw-tester.go-gtp.example"
+apn: "gw-tester.upf.example"
 local_addresses:
   s1c_addr: "127.0.1.12:36412"
   s11_ip: "127.0.1.12"

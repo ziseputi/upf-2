@@ -67,8 +67,8 @@ Just `go get` eNB and MME.
 Functional S-GW and P-GW are also available in the same directory if you need.
 
 ```shell-session
-go get go-gtp/examples/gw-tester/enb
-go get go-gtp/examples/gw-tester/mme
+go get upf/examples/gw-tester/enb
+go get upf/examples/gw-tester/mme
 ```
 
 And run them with YAML configuration. See [Configuration](#configurations) section for details.

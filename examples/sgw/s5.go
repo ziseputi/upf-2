@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	v2 "upf/v2"
-	"upf/v2/ies"
-	"upf/v2/messages"
+	v2 "upf/gtp/v2"
+	"upf/gtp/v2/ies"
+	"upf/gtp/v2/messages"
 )
 
 func handleCreateSessionResponse(s5cConn *v2.Conn, pgwAddr net.Addr, msg messages.Message) error {

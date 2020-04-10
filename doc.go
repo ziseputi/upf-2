@@ -1,4 +1,4 @@
-// Copyright 2019-2020 go-gtp authors. All rights reserved.
+// Copyright 2019-2020 upf authors. All rights reserved.
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
@@ -17,7 +17,7 @@
 // Please also see README.md for detailed usage of the APIs provided by this package,
 // as well as how to run the examples.
 //
-// https://go-gtp/blob/master/README.md
+// https://upf/blob/master/README.md
 //
-// https://go-gtp/tree/master/examples/gw-tester
+// https://upf/tree/master/examples/gw-tester
 package gtp

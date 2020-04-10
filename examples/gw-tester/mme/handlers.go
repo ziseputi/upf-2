@@ -1,4 +1,4 @@
-// Copyright 2019-2020 go-gtp authors. All rights reserved.
+// Copyright 2019-2020 upf authors. All rights reserved.
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
@@ -9,9 +9,9 @@ import (
 	"log"
 	"net"
 
-	v2 "upf/v2"
-	"upf/v2/ies"
-	"upf/v2/messages"
+	v2 "upf/gtp/v2"
+	"upf/gtp/v2/ies"
+	"upf/gtp/v2/messages"
 )
 
 func (m *mme) handleCreateSessionResponse(c *v2.Conn, sgwAddr net.Addr, msg messages.Message) error {

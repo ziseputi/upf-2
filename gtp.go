@@ -1,13 +1,13 @@
-// Copyright 2019-2020 go-gtp authors. All rights reserved.
+// Copyright 2019-2020 upf authors. All rights reserved.
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
 package gtp
 
 import (
-	v0msg "upf/v0/messages"
-	v1msg "upf/v1/messages"
-	v2msg "upf/v2/messages"
+	v0msg "upf/gtp/v0/messages"
+	v1msg "upf/gtp/v1/messages"
+	v2msg "upf/gtp/v2/messages"
 )
 
 // Message is an interface that defines all versions of GTP messages.
