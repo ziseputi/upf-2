@@ -38,7 +38,7 @@ func Marshal(m Message) ([]byte, error) {
 // Parse decodes given bytes as Message.
 func Parse(b []byte) (Message, error) {
 	if len(b) < 8 {
-		return nil, ErrTooShortToParse
+		return nil, nil
 	}
 
 	switch b[0] >> 5 {
@@ -49,6 +49,6 @@ func Parse(b []byte) (Message, error) {
 	case 2:
 		return v2msg.Parse(b)
 	default:
-		return nil, ErrInvalidVersion
+		return nil, nil
 	}
 }

@@ -4,7 +4,7 @@ A pseudo eNB and MME as a tester for S/P-GW.
 
 ## What's this?
 
-![diagram](./docs/diagram.png)
+![diagram](docs/diagram.png)
 
 It is a burden to use actual UE/eNB/MME just to test S/P-GW, isn't it?  
 GW Tester emulates the minimal required behavior of surrounding nodes to perform a quick and simple testing on S/P-GW.

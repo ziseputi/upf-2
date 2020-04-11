@@ -1,4 +1,5 @@
-# upf: GTP in Golang
+# upf for go
+
 
 Package gtp provides simple and painless handling of GTP(GPRS Tunneling Protocol), implemented in the Go Programming Language.
 
@@ -10,7 +11,7 @@ Package gtp provides simple and painless handling of GTP(GPRS Tunneling Protocol
 ## Features
 
 * Flexible enough to **control everything in GTP protocol**.;
-  * For developing mobile core network nodes (see [examples](./examples)).
+  * For developing mobile core network nodes (see [examples](gtp/examples)).
   * For developing testing tools like traffic simulators or fuzzers.
 * Many **helpers kind to developers** provided, like session, bearer, and TEID associations.
 * Easy handling of **multiple connections with fixed IP and Port** with UDP (or other `net.PacketConn`).
@@ -26,6 +27,10 @@ The following packages should be installed before starting.
 go get -u github.com/pkg/errors
 go get -u github.com/google/go-cmp/cmp
 go get -u github.com/pascaldekloe/goe/verify
+go get -u github.com/vishvananda/netlink
+go get -u github.com/vishvananda/netns
+go get -u github.com/pascaldekloe/goe
+
 ```
 
 If you use Go 1.11+, you can also use Go Modules.
