@@ -12,12 +12,10 @@ import (
 )
 
 func main() {
-	log.Println("upf starting")
+
 	var address = "127.0.0.1:2152"
 
 	start(address)
-
-	log.Println("upf started")
 
 	c := make(chan os.Signal)
 	//监听指定信号 ctrl+c kill
@@ -28,7 +26,7 @@ func main() {
 }
 
 func start(address string) (srvConn *v1.UPlaneConn, err error) {
-	log.Println("upf gtp bind ip:", address)
+	log.Println("upf starting")
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	if ctx == nil {
@@ -40,20 +38,23 @@ func start(address string) (srvConn *v1.UPlaneConn, err error) {
 		log.Println("ResolveUDPAddr ip error:", address)
 		return nil, err
 	}
-	////start server
-	//go func() {
-	//	srvConn = v1.NewUPlaneConn(srvAddr)
-	//	if err := srvConn.ListenAndServe(ctx); err != nil {
-	//		log.Println("upf start bind ip error:", address)
-	//		return
-	//	}
-	//}()
-
+	//start server
 	srvConn = v1.NewUPlaneConn(srvAddr)
+
 	if err := srvConn.ListenAndServe(ctx); err != nil {
-		log.Println("upf start bind ip error:", address)
-		return nil, err
+		log.Println("upf start ListenAndServe error:", address)
+		return srvConn, nil
+	} else {
+		log.Println("upf bind ip ok:", address)
 	}
+
+	//srvConn = v1.NewUPlaneConn(srvAddr)
+	//if err := srvConn.ListenAndServe(ctx); err != nil {
+	//	log.Println("upf start bind ip error:", address)
+	//	return nil, err
+	//}
+
+	log.Println("upf start ok")
 
 	return srvConn, nil
 }
