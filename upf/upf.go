@@ -1,18 +1,19 @@
 package main
 
 import (
-	"golang.org/x/net/context"
+	"context"
 	"log"
 	"net"
 	"os"
 	"os/signal"
 	"syscall"
-	"upf/gtp/v1"
+
+	v1 "upf/gtp/v1"
 )
 
 func main() {
 	log.Println("upf starting")
-	var address = "10.10.12.77:2152"
+	var address = "127.0.0.1:2152"
 
 	start(address)
 
@@ -29,7 +30,9 @@ func main() {
 func start(address string) (srvConn *v1.UPlaneConn, err error) {
 	log.Println("upf gtp bind ip:", address)
 	ctx, cancel := context.WithCancel(context.Background())
-	if cancel != nil {
+	defer cancel()
+	if ctx == nil {
+		log.Println("WithCancel ip error:", address)
 		return nil, err
 	}
 	srvAddr, err := net.ResolveUDPAddr("udp", address)
@@ -37,10 +40,20 @@ func start(address string) (srvConn *v1.UPlaneConn, err error) {
 		log.Println("ResolveUDPAddr ip error:", address)
 		return nil, err
 	}
+	////start server
+	//go func() {
+	//	srvConn = v1.NewUPlaneConn(srvAddr)
+	//	if err := srvConn.ListenAndServe(ctx); err != nil {
+	//		log.Println("upf start bind ip error:", address)
+	//		return
+	//	}
+	//}()
+
 	srvConn = v1.NewUPlaneConn(srvAddr)
 	if err := srvConn.ListenAndServe(ctx); err != nil {
 		log.Println("upf start bind ip error:", address)
 		return nil, err
 	}
+
 	return srvConn, nil
 }
