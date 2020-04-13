@@ -22,21 +22,21 @@ type testVal struct {
 }
 
 func setup(ctx context.Context) (cliConn, srvConn *v1.UPlaneConn, err error) {
-	cliAddr, err := net.ResolveUDPAddr("udp", "127.0.0.1:2152")
+	cliAddr, err := net.ResolveUDPAddr("udp", "10.10.12.77:2162")
 	if err != nil {
 		return nil, nil, err
 	}
-	srvAddr, err := net.ResolveUDPAddr("udp", "127.0.0.2:2152")
+	srvAddr, err := net.ResolveUDPAddr("udp", "10.10.12.77:2152")
 	if err != nil {
 		return nil, nil, err
 	}
-
-	go func() {
-		srvConn = v1.NewUPlaneConn(srvAddr)
-		if err := srvConn.ListenAndServe(ctx); err != nil {
-			return
-		}
-	}()
+	////
+	//go func() {
+	//	srvConn = v1.NewUPlaneConn(srvAddr)
+	//	if err := srvConn.ListenAndServe(ctx); err != nil {
+	//		return
+	//	}
+	//}()
 
 	// XXX - waiting for server to be well-prepared, should consider better way.
 	time.Sleep(1 * time.Second)

@@ -22,7 +22,7 @@ func setup(ctx context.Context, doneCh chan struct{}) (cliConn, srvConn *v2.Conn
 	if err != nil {
 		return nil, nil, err
 	}
-	srvAddr, err := net.ResolveUDPAddr("udp", "127.0.0.2"+v2.GTPCPort)
+	srvAddr, err := net.ResolveUDPAddr("udp", "127.0.0.1"+v2.GTPCPort)
 	if err != nil {
 		return nil, nil, err
 	}
