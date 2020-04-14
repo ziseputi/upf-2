@@ -7,15 +7,13 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-
-	v1 "upf/gtp/v1"
+	"upf/gtp/v1"
+	"upf/upf/service"
 )
 
 func main() {
 
-	var address = "127.0.0.1:2152"
-
-	start(address)
+	initService("/Users/wuhao/data/code/github/go/src/upf/upf/upf.yml")
 
 	c := make(chan os.Signal)
 	//监听指定信号 ctrl+c kill
@@ -25,7 +23,25 @@ func main() {
 	log.Println("upf stoped", s)
 }
 
-func start(address string) (err error) {
+func initService(file string) {
+	var pfcpAddress = "127.0.0.1:2152"
+	var gtpAddress = "127.0.0.1:2152"
+	cfg, err := service.LoadConfig(file)
+	if err != nil {
+		log.Fatal(err)
+	} else {
+		pfcpAddress = cfg.LocalAddrs.PFCPADDR
+		gtpAddress = cfg.LocalAddrs.GTPUADDR
+	}
+	go initPFCP(pfcpAddress)
+	go initGTPU(gtpAddress)
+}
+
+func initPFCP(address string) {
+
+}
+
+func initGTPU(address string) (err error) {
 	log.Println("upf starting")
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -51,12 +67,6 @@ func start(address string) (err error) {
 		}
 
 	}()
-
-	//srvConn = v1.NewUPlaneConn(srvAddr)
-	//if err := srvConn.ListenAndServe(ctx); err != nil {
-	//	log.Println("upf start bind ip error:", address)
-	//	return nil, err
-	//}
 
 	log.Println("upf start ok")
 
