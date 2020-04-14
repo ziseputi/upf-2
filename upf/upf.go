@@ -25,28 +25,32 @@ func main() {
 	log.Println("upf stoped", s)
 }
 
-func start(address string) (srvConn *v1.UPlaneConn, err error) {
+func start(address string) (err error) {
 	log.Println("upf starting")
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	if ctx == nil {
-		log.Println("WithCancel ip error:", address)
-		return nil, err
+		log.Println("context.WithCancel ip error:", address)
+		return err
 	}
 	srvAddr, err := net.ResolveUDPAddr("udp", address)
 	if err != nil {
 		log.Println("ResolveUDPAddr ip error:", address)
-		return nil, err
+		return err
 	}
 	//start server
-	srvConn = v1.NewUPlaneConn(srvAddr)
 
-	if err := srvConn.ListenAndServe(ctx); err != nil {
-		log.Println("upf start ListenAndServe error:", address)
-		return srvConn, nil
-	} else {
-		log.Println("upf bind ip ok:", address)
-	}
+	func() {
+		log.Println("upf start run server:", address)
+		srvConn := v1.NewUPlaneConn(srvAddr)
+		if err := srvConn.ListenAndServe(ctx); err != nil {
+			log.Println("upf start ListenAndServe error:", address)
+			return
+		} else {
+			log.Println("upf bind ip ok:", address)
+		}
+
+	}()
 
 	//srvConn = v1.NewUPlaneConn(srvAddr)
 	//if err := srvConn.ListenAndServe(ctx); err != nil {
@@ -56,5 +60,5 @@ func start(address string) (srvConn *v1.UPlaneConn, err error) {
 
 	log.Println("upf start ok")
 
-	return srvConn, nil
+	return nil
 }

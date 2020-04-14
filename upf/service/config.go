@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
-package main
+package service
 
 import (
 	"fmt"
@@ -14,10 +14,14 @@ import (
 // Config is a configurations loaded from yaml.
 type Config struct {
 	LocalAddrs struct {
-		S1CIP string `yaml:"s1c_ip"`
-		S1UIP string `yaml:"s1u_ip"`
+		string `yaml:"gtpu_ip"`
+		S1UIP  string `yaml:"pfcp_ip"`
 	} `yaml:"local_addresses"`
 
+	MCC string `yaml:"mcc"`
+	MNC string `yaml:"mnc"`
+
+	APN      string `yaml:"apn"`
 	MMEAddr  string `yaml:"mme_addr"`
 	PromAddr string `yaml:"prom_addr"`
 
