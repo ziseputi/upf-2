@@ -8,9 +8,9 @@ import (
 	"context"
 	"log"
 	"net"
-	"net/http"
-
-	"github.com/prometheus/client_golang/prometheus/promhttp"
+	//"net/http"
+	//
+	//"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/vishvananda/netlink"
 	v1 "upf/gtp/v1"
 	"upf/gtp/v2/messages"
@@ -100,19 +100,19 @@ func (p *pgw) run(ctx context.Context) error {
 	log.Printf("Started serving S5-U on %s", uAddr)
 
 	// start serving Prometheus, if address is given
-	if p.promAddr != "" {
-		if err := p.runMetricsCollector(); err != nil {
-			return err
-		}
-
-		http.Handle("/metrics", promhttp.Handler())
-		go func() {
-			if err := http.ListenAndServe(p.promAddr, nil); err != nil {
-				log.Println(err)
-			}
-		}()
-		log.Printf("Started serving Prometheus on %s", p.promAddr)
-	}
+	//if p.promAddr != "" {
+	//	if err := p.runMetricsCollector(); err != nil {
+	//		return err
+	//	}
+	//
+	//	http.Handle("/metrics", promhttp.Handler())
+	//	go func() {
+	//		if err := http.ListenAndServe(p.promAddr, nil); err != nil {
+	//			log.Println(err)
+	//		}
+	//	}()
+	//	log.Printf("Started serving Prometheus on %s", p.promAddr)
+	//}
 
 	for {
 		select {

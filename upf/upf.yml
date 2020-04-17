@@ -2,7 +2,7 @@ mcc: "001"
 mnc: "01"
 apn: "u5gc.example"
 local_addresses:
-  gtpu_addr: "127.0.0.1:2152"
-  pfcp_addr: "127.0.0.1:8805"
+  gtpu_addr: "10.10.12.96:2152"
+  pfcp_addr: "10.10.12.96:8805"
 peer_addresses:
   smf_addr: "10.10.12.73:8805"

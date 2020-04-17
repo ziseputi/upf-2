@@ -71,7 +71,6 @@ func handleTPDU(c Conn, senderAddr net.Addr, msg messages.Message) error {
 		payload: pdu.Payload,
 	}
 
-	u.WriteToGTP(pdu.TEID(), pdu.Payload, senderAddr)
 	// wait for the T-PDU passed to u.tpduCh to be read by ReadFromGTP.
 	// if it got stuck for 3 seconds, it discards the T-PDU received.
 	go func() {

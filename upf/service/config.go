@@ -24,6 +24,7 @@ type Config struct {
 	PeerAddrs struct {
 		SMFADDR string `yaml:"smf_addr"`
 	} `yaml:"peer_addresses"`
+	RouteSubnet string `yaml:"route_subnet"`
 }
 
 func LoadConfig(path string) (*Config, error) {
