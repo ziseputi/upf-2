@@ -81,14 +81,14 @@ func TestClientWrite(t *testing.T) {
 	if _, err := cliConn.WriteToGTP(tv.teidOut, httpSyn(), srvAddr); err != nil {
 		t.Fatal(err)
 	}
-	time.Sleep(500 * time.Microsecond)
-	if _, err := cliConn.WriteToGTP(tv.teidOut, httpAck(), srvAddr); err != nil {
-		t.Fatal(err)
-	}
-	time.Sleep(500 * time.Microsecond)
-	if _, err := cliConn.WriteToGTP(tv.teidOut, httpGet(), srvAddr); err != nil {
-		t.Fatal(err)
-	}
+	//time.Sleep(500 * time.Microsecond)
+	//if _, err := cliConn.WriteToGTP(tv.teidOut, httpAck(), srvAddr); err != nil {
+	//	t.Fatal(err)
+	//}
+	//time.Sleep(500 * time.Microsecond)
+	//if _, err := cliConn.WriteToGTP(tv.teidOut, httpGet(), srvAddr); err != nil {
+	//	t.Fatal(err)
+	//}
 
 	select {
 	case <-okCh:

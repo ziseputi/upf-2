@@ -57,6 +57,7 @@ func (u *UPlaneConn) EnableKernelGTP(devname string, role Role) error {
 		FD1:  int(f.Fd()),
 		Role: int(role),
 	}
+	netlink.LinkDel(u.GTPLink)
 
 	if err := netlink.LinkAdd(u.GTPLink); err != nil {
 		return errors.Wrapf(err, "failed to add device: %s", u.GTPLink.Name)

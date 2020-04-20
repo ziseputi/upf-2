@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
-package service
+package main
 
 import (
 	"io/ioutil"
@@ -13,21 +13,18 @@ import (
 // Config is a configurations loaded from yaml.
 type Config struct {
 	LocalAddrs struct {
-		GTPUADDR string `yaml:"gtpu_addr"`
-		PFCPADDR string `yaml:"pfcp_addr"`
+		S5CIP string `yaml:"s5c_ip"`
+		S5UIP string `yaml:"s5u_ip"`
+		SGiIP string `yaml:"sgi_ip"`
 	} `yaml:"local_addresses"`
 
-	MCC string `yaml:"mcc"`
-	MNC string `yaml:"mnc"`
-	APN string `yaml:"apn"`
+	PromAddr string `yaml:"prom_addr"`
 
-	PeerAddrs struct {
-		SMFADDR string `yaml:"smf_addr"`
-	} `yaml:"peer_addresses"`
+	SGiIFName   string `yaml:"sgi_if_name"`
 	RouteSubnet string `yaml:"route_subnet"`
 }
 
-func LoadConfig(path string) (*Config, error) {
+func loadConfig(path string) (*Config, error) {
 	buf, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
