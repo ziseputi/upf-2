@@ -1,8 +1,4 @@
-// Copyright 2019-2020 upf authors. All rights reserved.
-// Use of this source code is governed by a MIT-style license that can be
-// found in the LICENSE file.
-
-package main
+package service
 
 import (
 	"log"
@@ -10,16 +6,13 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
-	v2 "upf/gtp/v2"
+	"upf/gtp/v2"
 	"upf/gtp/v2/ies"
 	"upf/gtp/v2/messages"
 )
 
-func (p *pgw) handleCreateSessionRequest(c *v2.Conn, sgwAddr net.Addr, msg messages.Message) error {
+func (node *Node) handleCreateSessionRequest(c *v2.Conn, sgwAddr net.Addr, msg messages.Message) error {
 	log.Printf("Received %s from %s", msg.MessageTypeName(), sgwAddr)
-	if p.mc != nil {
-		p.mc.messagesReceived.WithLabelValues(sgwAddr.String(), msg.MessageTypeName()).Inc()
-	}
 
 	// assert type to refer to the struct field specific to the message.
 	// in general, no need to check if it can be type-asserted, as long as the MessageType is
@@ -147,9 +140,9 @@ func (p *pgw) handleCreateSessionRequest(c *v2.Conn, sgwAddr net.Addr, msg messa
 	}
 
 	cIP := strings.Split(c.LocalAddr().String(), ":")[0]
-	uIP := strings.Split(p.s5u, ":")[0]
+	uIP := strings.Split(node.n3u, ":")[0]
 	s5cFTEID := c.NewSenderFTEID(cIP, "").WithInstance(1)
-	s5uFTEID := p.uConn.NewFTEID(v2.IFTypeS5S8PGWGTPU, uIP, "").WithInstance(2)
+	s5uFTEID := node.uConn.NewFTEID(v2.IFTypeS5S8PGWGTPU, uIP, "").WithInstance(2)
 	s5sgwTEID, err := session.GetTEID(v2.IFTypeS5S8SGWGTPC)
 	if err != nil {
 		return err
@@ -176,9 +169,6 @@ func (p *pgw) handleCreateSessionRequest(c *v2.Conn, sgwAddr net.Addr, msg messa
 	if err := c.RespondTo(sgwAddr, csReqFromSGW, csRspFromPGW); err != nil {
 		return err
 	}
-	if p.mc != nil {
-		p.mc.messagesSent.WithLabelValues(sgwAddr.String(), csRspFromPGW.MessageTypeName()).Inc()
-	}
 
 	s5pgwTEID, err := session.GetTEID(v2.IFTypeS5S8PGWGTPC)
 	if err != nil {
@@ -191,7 +181,7 @@ func (p *pgw) handleCreateSessionRequest(c *v2.Conn, sgwAddr net.Addr, msg messa
 	}
 	c.RegisterSession(s5pgwTEID, session)
 
-	if err := p.setupUPlane(net.ParseIP(s5sgwuIP), net.ParseIP(bearer.SubscriberIP), oteiU, s5uFTEID.MustTEID()); err != nil {
+	if err := node.setupUPlane(net.ParseIP(s5sgwuIP), net.ParseIP(bearer.SubscriberIP), oteiU, s5uFTEID.MustTEID()); err != nil {
 		return err
 	}
 
@@ -201,11 +191,8 @@ func (p *pgw) handleCreateSessionRequest(c *v2.Conn, sgwAddr net.Addr, msg messa
 	return nil
 }
 
-func (p *pgw) handleDeleteSessionRequest(c *v2.Conn, sgwAddr net.Addr, msg messages.Message) error {
+func (u *Node) handleDeleteSessionRequest(c *v2.Conn, sgwAddr net.Addr, msg messages.Message) error {
 	log.Printf("Received %s from %s", msg.MessageTypeName(), sgwAddr)
-	if p.mc != nil {
-		p.mc.messagesReceived.WithLabelValues(sgwAddr.String(), msg.MessageTypeName()).Inc()
-	}
 
 	// assert type to refer to the struct field specific to the message.
 	// in general, no need to check if it can be type-asserted, as long as the MessageType is
@@ -235,9 +222,6 @@ func (p *pgw) handleDeleteSessionRequest(c *v2.Conn, sgwAddr net.Addr, msg messa
 	)
 	if err := c.RespondTo(sgwAddr, msg, dsr); err != nil {
 		return err
-	}
-	if p.mc != nil {
-		p.mc.messagesSent.WithLabelValues(sgwAddr.String(), dsr.MessageTypeName()).Inc()
 	}
 
 	log.Printf("Session deleted for Subscriber: %s", session.IMSI)

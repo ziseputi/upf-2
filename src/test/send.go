@@ -1,0 +1,48 @@
+package main
+
+import (
+	"github.com/mushroomsir/blog/examples/util"
+	"log"
+	"strconv"
+	"strings"
+	"syscall"
+)
+
+func main() {
+	local := "10.10.12.96"
+	remote := "10.10.12.77"
+	fd, _ := syscall.Socket(syscall.AF_INET, syscall.SOCK_RAW, syscall.IPPROTO_RAW)
+	addr := syscall.SockaddrInet4{
+		Port: 0,
+		Addr: [4]byte{10, 10, 12, 96},
+	}
+	ycpHeader := util.TCPHeader{
+		Source:      17663, // Random ephemeral port
+		Destination: 8099,
+		SeqNum:      2,
+		AckNum:      0,
+		DataOffset:  5,      // 4 bits
+		Reserved:    0,      // 3 bits
+		ECN:         0,      // 3 bits
+		Ctrl:        2,      // 6 bits (000010, SYN bit set)
+		Window:      0xaaaa, // size of your receive window
+		Checksum:    0,      // Kernel will set this if it's 0
+		Urgent:      99,
+	}
+	data := ycpHeader.Marshal()
+	ycpHeader.Checksum = util.Csum(data, to4byte(local), to4byte(remote))
+	data = ycpHeader.Marshal()
+	data = append(data, []byte("xxx")...)
+	syscall.Sendto(fd, data, 0, &addr)
+}
+func to4byte(addr string) [4]byte {
+	parts := strings.Split(addr, ".")
+	b0, err := strconv.Atoi(parts[0])
+	if err != nil {
+		log.Fatalf("to4byte: %s (latency works with IPv4 addresses only, but not IPv6!)\n", err)
+	}
+	b1, _ := strconv.Atoi(parts[1])
+	b2, _ := strconv.Atoi(parts[2])
+	b3, _ := strconv.Atoi(parts[3])
+	return [4]byte{byte(b0), byte(b1), byte(b2), byte(b3)}
+}

@@ -2,7 +2,6 @@
 // Use of this source code is governed by a MIT-style license that can be
 // found in the LICENSE file.
 
-// Command pgw is a dead simple implementation of P-GW only with GTP-related features.
 package main
 
 import (
@@ -12,25 +11,27 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
+	"upf/src/upf/service"
 )
 
 func main() {
-	var configPath = flag.String("config", "./pgw.yml", "Path to the configuration file.")
+	var configPath = flag.String("config", "/home/wuhao/data/code/go/src/upf/src/upf/upf.yml", "Path to the configuration file.")
 	flag.Parse()
-	log.SetPrefix("[P-GW] ")
+	log.SetPrefix("[UPF] ")
 
-	cfg, err := loadConfig(*configPath)
+	cfg, err := service.LoadConfig(*configPath)
 	if err != nil {
 		log.Println(err)
 		return
 	}
 
-	pgw, err := newPGW(cfg)
+	node, err := service.NewUPF(cfg)
 	if err != nil {
-		log.Printf("failed to initialize P-GW: %s", err)
+		log.Printf("failed to initialize UPF: %s", err)
 		return
 	}
-	defer pgw.close()
+	defer node.Close()
 
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGHUP)
@@ -40,7 +41,7 @@ func main() {
 
 	fatalCh := make(chan error)
 	go func() {
-		if err := pgw.run(ctx); err != nil {
+		if err := node.Run(ctx); err != nil {
 			fatalCh <- err
 		}
 	}()
@@ -51,7 +52,7 @@ func main() {
 			// TODO: reload config on receiving SIGHUP
 			log.Println(sig)
 			return
-		case err := <-pgw.errCh:
+		case err := <-node.ErrCh:
 			log.Printf("WARN: %s", err)
 		case err := <-fatalCh:
 			log.Printf("FATAL: %s", err)

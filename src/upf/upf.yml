@@ -1,0 +1,12 @@
+mcc: "001"
+mnc: "01"
+apn: "u5gc.example"
+local_addresses:
+  n3c_addr: "10.10.12.96:2123"
+  n3u_addr: "10.10.12.96:2152"
+  n4_addr: "10.10.12.96:8805"
+ngif_name: "enpn3"
+route_subnet: "192.168.101.0/24"
+peer_addresses:
+  smf_addr: "10.10.12.73:8805"
+prom_addr: "127.0.10.4:58080"
