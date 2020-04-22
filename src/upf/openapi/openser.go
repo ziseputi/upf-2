@@ -1,28 +1,19 @@
 package openapi
 
 import (
-	"github.com/vishvananda/netlink"
-	"log"
 	"net/http"
+	"upf/src/upf/service"
 )
 
-func Start() {
+func Start(node *service.Node) {
 	http.HandleFunc("/view", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("upf open api"))
 	})
-
-	http.HandleFunc("/link", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("upf print link"))
-		func() float64 {
-			log.Printf("link-print gtp")
-			tunnels, err := netlink.GTPPDPList()
-			if err != nil {
-				log.Printf("openser: could not get tunnels: %s", err)
-				return 0
-			}
-			return float64(len(tunnels))
-		}()
-	})
-
-	http.ListenAndServe("127.0.0.1:8080", nil)
+	http.HandleFunc("/link", linkshow)
+	http.HandleFunc("/session/create", create)
+	http.HandleFunc("/session/modify", modify)
+	http.HandleFunc("/session/delete", delete)
+	http.HandleFunc("/session/report", report)
+	opNode = node
+	http.ListenAndServe("0.0.0.0:8080", nil)
 }

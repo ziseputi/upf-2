@@ -1,7 +1,3 @@
-// Copyright 2019-2020 upf authors. All rights reserved.
-// Use of this source code is governed by a MIT-style license that can be
-// found in the LICENSE file.
-
 package main
 
 import (
@@ -11,7 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-
+	"upf/src/upf/openapi"
 	"upf/src/upf/service"
 )
 
@@ -33,8 +29,10 @@ func main() {
 	}
 	defer node.Close()
 
-	sigCh := make(chan os.Signal, 1)
-	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGHUP)
+	go openapi.Start(node)
+
+	nigCh := make(chan os.Signal, 1)
+	signal.Notify(nigCh, syscall.SIGINT, syscall.SIGHUP)
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -48,8 +46,8 @@ func main() {
 
 	for {
 		select {
-		case sig := <-sigCh:
-			// TODO: reload config on receiving SIGHUP
+		case sig := <-nigCh:
+			// TODO: reload config on receiving NIGHUP
 			log.Println(sig)
 			return
 		case err := <-node.ErrCh:
