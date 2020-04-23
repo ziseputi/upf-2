@@ -12,11 +12,9 @@ import (
 func TestClientWrite(t *testing.T) {
 	message := &service.SessionMessage{
 		Teid:   111,
-		PeerIp: "10.10.12.77",
-		UeIp:   "10.10.12.77",
-		Imsi:   "10.10.12.77",
-
-		ErrCh: make(chan error, 1),
+		PeerIp: "10.10.12.96",
+		UeIp:   "10.10.12.99",
+		Imsi:   "111111",
 	}
 
 	// 超时时间：5秒

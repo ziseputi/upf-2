@@ -9,14 +9,13 @@ import (
 )
 
 type SessionMessage struct {
-	MessageType uint8      //
-	Teid        uint32     //
-	Sequence    uint32     //
-	Version     int        //
-	PeerIp      string     //
-	UeIp        string     //
-	Imsi        string     //
-	ErrCh       chan error //
+	MessageType uint8  //
+	Teid        uint32 //
+	Sequence    uint32 //
+	Version     int    //
+	PeerIp      string //
+	UeIp        string //
+	Imsi        string //
 }
 
 func (node *Node) CreateSessionRequest(message SessionMessage) error {
@@ -42,10 +41,11 @@ func (node *Node) CreateSessionRequest(message SessionMessage) error {
 
 	//start u
 	if err := node.setupUPlane(net.ParseIP(message.PeerIp), net.ParseIP(message.UeIp), message.Teid, message.Teid); err != nil {
+		log.Print("setupUPlane: ", err)
 		return err
 	}
 
-	log.Printf("Session created with UPF for subscriber: %s;\n\tS5C ran: %s, TEID->: %#x, TEID<-: %#x",
+	log.Printf("Session created with UPF for subscriber: %s;\n\t n3 ran: %s, TEID->: %#x, TEID<-: %#x",
 		message.Imsi, message.PeerIp, message.Teid, message.Teid,
 	)
 	return nil

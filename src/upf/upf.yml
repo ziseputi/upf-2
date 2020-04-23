@@ -5,7 +5,7 @@ local_addresses:
   n3c_addr: "10.10.12.96:2123"
   n3u_addr: "10.10.12.96:2152"
   n4_addr: "10.10.12.96:8805"
-ngif_name: "enpn3"
+ngif_name: "gtp-upf"
 route_subnet: "192.168.101.0/24"
 peer_addresses:
   smf_addr: "10.10.12.73:8805"
