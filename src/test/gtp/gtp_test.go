@@ -19,11 +19,11 @@ type testVal struct {
 }
 
 func setup(ctx context.Context) (cliConn *v1.UPlaneConn, add *net.UDPAddr, err error) {
-	cliAddr, err := net.ResolveUDPAddr("udp", "127.0.0.1:2162")
+	cliAddr, err := net.ResolveUDPAddr("udp", "10.10.12.96:2162")
 	if err != nil {
 		return nil, nil, err
 	}
-	srvAddr, err := net.ResolveUDPAddr("udp", "127.0.0.1:2152")
+	srvAddr, err := net.ResolveUDPAddr("udp", "10.10.12.96:2152")
 	if err != nil {
 		return nil, nil, err
 	}
@@ -81,14 +81,6 @@ func TestClientWrite(t *testing.T) {
 	if _, err := cliConn.WriteToGTP(tv.teidOut, httpSyn(), srvAddr); err != nil {
 		t.Fatal(err)
 	}
-	//time.Sleep(500 * time.Microsecond)
-	//if _, err := cliConn.WriteToGTP(tv.teidOut, httpAck(), srvAddr); err != nil {
-	//	t.Fatal(err)
-	//}
-	//time.Sleep(500 * time.Microsecond)
-	//if _, err := cliConn.WriteToGTP(tv.teidOut, httpGet(), srvAddr); err != nil {
-	//	t.Fatal(err)
-	//}
 
 	select {
 	case <-okCh:

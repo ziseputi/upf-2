@@ -16,6 +16,7 @@ func linkshow(w http.ResponseWriter, r *http.Request) {
 			log.Printf("openser: could not get tunnels: %s", err)
 			return 0
 		}
+		log.Printf(" get gtp tunnels: %s", tunnels)
 		return float64(len(tunnels))
 	}()
 
