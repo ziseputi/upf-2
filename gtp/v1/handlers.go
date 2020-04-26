@@ -8,6 +8,7 @@ import (
 	"net"
 	"sync"
 	"time"
+	"upf/gtp/utils"
 
 	"upf/gtp/v1/ies"
 	"upf/gtp/v1/messages"
@@ -70,7 +71,7 @@ func handleTPDU(c Conn, senderAddr net.Addr, msg messages.Message) error {
 		seq:     pdu.Sequence(),
 		payload: pdu.Payload,
 	}
-
+	utils.IpWritePayLoad(pdu.Payload, "10.10.12.77")
 	// wait for the T-PDU passed to u.tpduCh to be read by ReadFromGTP.
 	// if it got stuck for 3 seconds, it discards the T-PDU received.
 	go func() {

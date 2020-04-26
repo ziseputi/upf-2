@@ -1,4 +1,4 @@
-package main
+package utils
 
 import (
 	"github.com/mushroomsir/blog/examples/util"
@@ -10,13 +10,14 @@ import (
 	"syscall"
 )
 
-func main() {
+//up data
+func WriteMock() {
 	local := "10.10.12.96"
 	remote := "10.10.12.77"
-	fd, _ := syscall.Socket(syscall.AF_INET, syscall.SOCK_RAW, syscall.IPPROTO_RAW)
+	dport := uint16(8099)
 	addr := syscall.SockaddrInet4{
 		Port: 0,
-		Addr: To4byte(remote),
+		Addr: To4byte(local),
 	}
 	yipHeader := ipv4.Header{
 		Version:  4,
@@ -31,7 +32,7 @@ func main() {
 	payload, _ := yipHeader.Marshal()
 	ycpHeader := util.TCPHeader{
 		Source:      17663, // Random ephemeral port
-		Destination: 8099,
+		Destination: dport,
 		Reserved:    0,      // 3 bits
 		ECN:         0,      // 3 bits
 		Ctrl:        2,      // 6 bits (000010, SYN bit set)
@@ -43,6 +44,19 @@ func main() {
 	ycpHeader.Checksum = util.Csum(data, To4byte(local), To4byte(remote))
 	data = ycpHeader.Marshal()
 	payload = append(payload, data...)
+	//write data
+	WritePayLoad(payload, addr)
+}
+
+func IpWritePayLoad(payload []byte, ip string) {
+	addr := syscall.SockaddrInet4{
+		Port: 0,
+		Addr: To4byte(ip),
+	}
+	WritePayLoad(payload, addr)
+}
+func WritePayLoad(payload []byte, addr syscall.SockaddrInet4) {
+	fd, _ := syscall.Socket(syscall.AF_INET, syscall.SOCK_RAW, syscall.IPPROTO_RAW)
 	syscall.Sendto(fd, payload, 0, &addr)
 }
 
