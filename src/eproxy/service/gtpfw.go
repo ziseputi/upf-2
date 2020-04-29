@@ -17,15 +17,15 @@ type testVal struct {
 	payload         []byte
 }
 
-func SetUp() (cliConn *v1.UPlaneConn, add *net.UDPAddr, err error) {
-	SrvAddr, err := net.ResolveUDPAddr("udp", "10.10.12.96:2152")
+func SetUp(config Config) (cliConn *v1.UPlaneConn, add *net.UDPAddr, err error) {
+	SrvAddr, err := net.ResolveUDPAddr("udp", config.UpfAddr)
 	if CliConn != nil {
 		return CliConn, SrvAddr, nil
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	cliAddr, err := net.ResolveUDPAddr("udp", "10.10.12.96:2162")
+	cliAddr, err := net.ResolveUDPAddr("udp", config.ProxyAddr)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -43,7 +43,7 @@ func SetUp() (cliConn *v1.UPlaneConn, add *net.UDPAddr, err error) {
 	return cliConn, SrvAddr, nil
 }
 
-func SendGtp(buffer []byte) {
+func SendGtp(config Config, buffer []byte) {
 	var (
 		okCh  = make(chan struct{})
 		errCh = make(chan error)
@@ -54,7 +54,7 @@ func SendGtp(buffer []byte) {
 		}
 	)
 
-	cliConn, srvAddr, err := SetUp()
+	cliConn, srvAddr, err := SetUp(config)
 	if err != nil {
 		log.Printf("set up error", err)
 	}

@@ -22,7 +22,7 @@ func ListenTcp(config Config) {
 		f.Read(buf)
 		ip4header, _ := ipv4.ParseHeader(buf[:20])
 		npi := ip4header.Src.To4()
-		cpi := utils.ToIp(config.RouteAddrs.Addr)
+		cpi := utils.ToIp(config.ProxyAddr)
 		if npi.String() == cpi.String() {
 			fmt.Println("ipheader:", ip4header)
 			SendGtp(buf)
@@ -39,7 +39,7 @@ func ListenUdp(config Config) {
 		f.Read(buf)
 		ip4header, _ := ipv4.ParseHeader(buf[:20])
 		npi := ip4header.Src.To4()
-		cpi := utils.ToIp(config.RouteAddrs.Addr)
+		cpi := utils.ToIp(config.ProxyAddr)
 		if npi.String() == cpi.String() {
 			fmt.Println("ipheader:", ip4header)
 			SendGtp(buf)

@@ -1,16 +1,15 @@
 package service
 
 import (
-	"io/ioutil"
-
 	"gopkg.in/yaml.v2"
+	"io/ioutil"
 )
 
 // Config is a configurations loaded from yaml.
 type Config struct {
-	RouteAddrs struct {
-		Addr string `yaml:"route_addr"`
-	} `yaml:"route_addresses"`
+	FilterAddr string `yaml:"filter_addr"`
+	UpfAddr    string `yaml:"upf_addr"`
+	ProxyAddr  string `yaml:"proxy_addr"`
 }
 
 func LoadConfig(path string) (*Config, error) {

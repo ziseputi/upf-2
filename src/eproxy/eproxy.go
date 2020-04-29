@@ -16,7 +16,7 @@ func main() {
 		log.Println(err)
 		return
 	}
-	service.SetUp()
+	service.SetUp(*cfg)
 	service.ListenTcp(*cfg)
 	//service.ListenTcp(cfg)
 
