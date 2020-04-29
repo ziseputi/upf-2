@@ -132,3 +132,10 @@ func ParseECI(eci uint32) (enbID uint32, cellID uint8, err error) {
 	enbID = binary.BigEndian.Uint32([]byte{0, buf[0], buf[1], buf[2]})
 	return
 }
+
+// CheckError ...
+func CheckError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}

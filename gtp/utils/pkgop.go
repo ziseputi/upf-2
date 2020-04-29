@@ -30,7 +30,7 @@ func WriteMock() {
 		Src:      ToIp(local),
 	}
 	payload, _ := yipHeader.Marshal()
-	ycpHeader := util.TCPHeader{
+	ycpHeader := TCPHeader{
 		Source:      17663, // Random ephemeral port
 		Destination: dport,
 		Reserved:    0,      // 3 bits
