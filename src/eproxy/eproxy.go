@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	var configPath = flag.String("config", "/home/wuhao/data/code/go/src/upf/src/upf/upf.yml", "Path to the configuration file.")
+	var configPath = flag.String("config", "/home/wuhao/data/code/go/src/upf/src/eproxy/eproxy.yml", "Path to the configuration file.")
 	flag.Parse()
 	log.SetPrefix("[EPROXY] ")
 
@@ -16,6 +16,7 @@ func main() {
 		log.Println(err)
 		return
 	}
+	service.SetUp()
 	service.ListenTcp(*cfg)
 	//service.ListenTcp(cfg)
 

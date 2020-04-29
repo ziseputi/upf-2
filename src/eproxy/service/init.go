@@ -25,7 +25,7 @@ func ListenTcp(config Config) {
 		cpi := utils.ToIp(config.RouteAddrs.Addr)
 		if npi.String() == cpi.String() {
 			fmt.Println("ipheader:", ip4header)
-
+			SendGtp(buf)
 		}
 
 	}
